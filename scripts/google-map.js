@@ -1,5 +1,6 @@
 'use strict';
 var MAP;
+//var COORDS;
 
 var config = {
   enableHighAccuracy: false, // set to true if you want to wait
@@ -29,13 +30,6 @@ var drawMap = function(position) {
   var MAP_ID = "my_google_map";
   mapcontainer.id = MAP_ID;
   mapcontainer.className = "container form-group";
-
-  //mapcontainer.style.height = '400px';
-  //mapcontainer.style.width = '600px';
-  //var height = Math.max(document.documentElement.clientHeight, window.innerHeight) || 400;
-  //var width = Math.max(document.documentElement.clientWidth, window.innerWidth) / 4 || 600;
-  //mapcontainer.style.height =  height - 300 + "px";
-  //mapcontainer.style.width =  (width * 3) + "px";
   
   getMapSize(mapcontainer);
 
@@ -97,11 +91,13 @@ var dropPinForAddress = function(address, text) {
   });
 };
 
+// Create the map
 navigator.geolocation.getCurrentPosition(function(position) {
   drawMap(position);
   markPosition(position, "This is me!");
 }, logError, config);
 
+// tell the map to redraw when resized
 var resizeTimeout; 
 google.maps.event.addDomListener(window, "resize", function() { 
   if (resizeTimeout) { 
@@ -109,6 +105,9 @@ google.maps.event.addDomListener(window, "resize", function() {
   } 
   resizeTimeout = setTimeout(function() {
     var mapcontainer = document.querySelector("#my_google_map");
+    //var center = MAP.getCenter();
     getMapSize(mapcontainer);
+    // I was reseting the map on the last marker, but maybe the user doesn't want that...
+    //MAP.setCenter(COORDS);
   }, 250); 
 });
