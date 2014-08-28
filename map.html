@@ -17,19 +17,22 @@
           <label for="address">Address</label>
           <input name="address" id="address" class="form-control" placeholder="112 Main St Mytown MyState" autofocus>
         </div>
-<!--         <div class="form-group col-md-6">
+        <div class="form-group col-md-6">
           <label for="markerColor">Marker Color</label>
           <select name="markerColor" id="markerColor" class="form-control">
-            <option>DUMMY</option>
+            <option>Color</option>
           </select>
-        </div> -->
+        </div>
         <div class="form-group col-md-6">
           <label for="tooltip">Marker tooltip (what shows when you hover/click on marker)</label>
           <input name="tooltip" id="tooltip" class="form-control" placeholder="You are here!">
         </div>
-<!--         <div class="form-group col-md-6">
-          
-        </div> -->
+        <div class="form-group col-md-6">
+          <label for="markerLetter">Marker Letter</label>
+          <select name="markerLetter" id="markerLetter" class="form-control">
+            <option>Letter</option>
+          </select>
+        </div>
         <div class="form-group">
           <button class="btn btn-primary" type="submit" id="submit">Add Marker</button>
         </div>
@@ -43,12 +46,27 @@
       var loadComboBoxItems = function() {
         var cbo = document.querySelector('#markerColor');
         cbo.remove(0);
-        var colors = ['blue', 'brown', 'darkgreen', 'green', 'orange', 'paleblue', 'pink', 'purple', 'red', 'yellow'];
+        var colors = ['default', 'blue', 'brown', 'darkgreen', 'green', 'orange', 'paleblue', 'pink', 'purple', 'red', 'yellow'];
         //colors.forEach(function(color) {
         for(var i = 0; i < colors.length; i++) {
           var option = document.createElement("option");
           option.text = colors[i];
           option.value = colors[i];
+          cbo.add(option);
+        }
+
+        cbo = document.querySelector('#markerLetter');
+        cbo.remove(0);
+        var dummy = document.createElement("option");
+        dummy.text = "default";
+        dummy.value = "default";
+        cbo.add(dummy);
+        
+        var alpha = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        for (var i = 0, len = alpha.length; i < len; i++) {
+          var option = document.createElement("option");
+          option.text = alpha[i];
+          option.value = alpha[i];
           cbo.add(option);
         }
       };
@@ -65,7 +83,7 @@
       document.querySelector("#js-map-form").addEventListener('submit', handleSubmission);
 
       window.addEventListener('DOMContentLoaded', function() {
-        //loadComboBoxItems();
+        loadComboBoxItems();
       });
     </script>
   </body>
