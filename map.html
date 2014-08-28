@@ -19,7 +19,7 @@
         </div>
         <div class="form-group">
           <label for="tooltip">Marker tooltip (what shows when you hover/click on marker)</label>
-          <input name="tooltip" id="tooltip" class="form-control" placeholder="This is me" autofocus>
+          <input name="tooltip" id="tooltip" class="form-control" placeholder="You are here!">
         </div>
         <div class="form-group">
           <button class="btn btn-primary" type="submit" id="submit">Add Marker</button>
@@ -36,8 +36,8 @@
         var address = event.target.address.value;
         var tooltip = event.target.tooltip.value;
         dropPinForAddress(address, tooltip);
-        event.target.address.value = "";
-        event.target.tooltip.value = "";
+        event.target.reset();
+        event.target.address.focus();
       };
 
       document.querySelector("#js-map-form").addEventListener('submit', handleSubmission);
