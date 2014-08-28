@@ -17,19 +17,28 @@ var logError = function(error) {
   console.log("whoops: " + error.code + " " + error.message);
 };
 
+var getMapSize = function(mapcontainer) {
+  var height = Math.max(document.documentElement.clientHeight, window.innerHeight) || 400;
+  var width = Math.max(document.documentElement.clientWidth, window.innerWidth) / 4 || 600;
+  mapcontainer.style.height =  height - 300 + "px";
+  mapcontainer.style.width =  (width * 3) + "px";
+};
+
 var drawMap = function(position) {
   var mapcontainer = document.createElement('div');
   var MAP_ID = "my_google_map";
   mapcontainer.id = MAP_ID;
   mapcontainer.className = "container form-group";
-  debugger;
+
   //mapcontainer.style.height = '400px';
   //mapcontainer.style.width = '600px';
-  var height = Math.max(document.documentElement.clientHeight, window.innerHeight) || 400;
-  var width = Math.max(document.documentElement.clientWidth, window.innerWidth) / 4 || 600;
-  mapcontainer.style.height =  height - 300 + "px";
-  mapcontainer.style.width =  (width * 3) + "px";
+  //var height = Math.max(document.documentElement.clientHeight, window.innerHeight) || 400;
+  //var width = Math.max(document.documentElement.clientWidth, window.innerWidth) / 4 || 600;
+  //mapcontainer.style.height =  height - 300 + "px";
+  //mapcontainer.style.width =  (width * 3) + "px";
   
+  getMapSize(mapcontainer);
+
   document.body.appendChild(mapcontainer);
   
   var coords = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
@@ -93,3 +102,13 @@ navigator.geolocation.getCurrentPosition(function(position) {
   markPosition(position, "This is me!");
 }, logError, config);
 
+var resizeTimeout; 
+google.maps.event.addDomListener(window, "resize", function() { 
+  if (resizeTimeout) { 
+    clearTimeout(resizeTimeout); 
+  } 
+  resizeTimeout = setTimeout(function() {
+    var mapcontainer = document.querySelector("#my_google_map");
+    getMapSize(mapcontainer);
+  }, 250); 
+});
