@@ -1,5 +1,5 @@
 <!doctype html>
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8">
     <!--    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">-->
@@ -13,14 +13,23 @@
     <h1>Google Map Test</h1>
     <div class="container">
       <form action="#" id="js-map-form">
-        <div class="form-group">
+        <div class="form-group col-md-6">
           <label for="address">Address</label>
           <input name="address" id="address" class="form-control" placeholder="112 Main St Mytown MyState" autofocus>
         </div>
-        <div class="form-group">
+<!--         <div class="form-group col-md-6">
+          <label for="markerColor">Marker Color</label>
+          <select name="markerColor" id="markerColor" class="form-control">
+            <option>DUMMY</option>
+          </select>
+        </div> -->
+        <div class="form-group col-md-6">
           <label for="tooltip">Marker tooltip (what shows when you hover/click on marker)</label>
           <input name="tooltip" id="tooltip" class="form-control" placeholder="You are here!">
         </div>
+<!--         <div class="form-group col-md-6">
+          
+        </div> -->
         <div class="form-group">
           <button class="btn btn-primary" type="submit" id="submit">Add Marker</button>
         </div>
@@ -31,6 +40,19 @@
     <!-- <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script> -->
     <script src="scripts/google-map.js"></script>
     <script type="text/javascript">
+      var loadComboBoxItems = function() {
+        var cbo = document.querySelector('#markerColor');
+        cbo.remove(0);
+        var colors = ['blue', 'brown', 'darkgreen', 'green', 'orange', 'paleblue', 'pink', 'purple', 'red', 'yellow'];
+        //colors.forEach(function(color) {
+        for(var i = 0; i < colors.length; i++) {
+          var option = document.createElement("option");
+          option.text = colors[i];
+          option.value = colors[i];
+          cbo.add(option);
+        }
+      };
+
       var handleSubmission = function(event) {
         event.preventDefault();
         var address = event.target.address.value;
@@ -41,6 +63,10 @@
       };
 
       document.querySelector("#js-map-form").addEventListener('submit', handleSubmission);
+
+      window.addEventListener('DOMContentLoaded', function() {
+        //loadComboBoxItems();
+      });
     </script>
   </body>
 
