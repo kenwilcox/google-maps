@@ -53,6 +53,7 @@ var markPosition = function(position, text) {
     position: coords,
     map: MAP,
     title: text || 'You are here!',
+    //icon: 'images/markers/brown_markerA.png',
   });
   
   var infoWindow = new google.maps.InfoWindow({
