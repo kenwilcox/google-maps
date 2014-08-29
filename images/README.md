@@ -1,0 +1,1 @@
+Just a place for images, only using markers/*.png at the moment
