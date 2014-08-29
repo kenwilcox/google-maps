@@ -1,6 +1,8 @@
 'use strict';
 var MAP;
 //var COORDS;
+var ITEM_KEY = "x-platform-js/mapItems";
+var mapItems = [];
 
 var config = {
   enableHighAccuracy: false, // set to true if you want to wait
@@ -99,14 +101,35 @@ var dropPinForAddress = function(address, text, markerColor, markerLetter) {
     marker = marker + ".png";
   }
   gpsForAddress(address, function(gps) {
+    var item = {};
+    item.gps = gps;
+    item.text = text;
+    item.marker = marker;
+    mapItems.push(item);
+    localStorage.setItem(ITEM_KEY, JSON.stringify(mapItems));
     markPosition(positionForGPS(gps), text, marker);
   });
+};
+
+var loadMapItems = function() {
+  var items;
+  try {
+    items = JSON.parse(localStorage.getItem(ITEM_KEY));
+  } catch(e) {
+    console.log(e);
+  }
+  items = items || [];
+  return items;
 };
 
 // Create the map
 navigator.geolocation.getCurrentPosition(function(position) {
   drawMap(position);
+  mapItems = loadMapItems();
   markPosition(position, "This is me!");
+  mapItems.forEach(function(item) {
+    markPosition(positionForGPS(item.gps), item.text, item.marker);
+  });
 }, logError, config);
 
 // tell the map to redraw when resized
