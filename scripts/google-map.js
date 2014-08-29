@@ -126,10 +126,10 @@ var loadMapItems = function() {
 navigator.geolocation.getCurrentPosition(function(position) {
   drawMap(position);
   mapItems = loadMapItems();
-  markPosition(position, "This is me!");
   mapItems.forEach(function(item) {
     markPosition(positionForGPS(item.gps), item.text, item.marker);
   });
+  markPosition(position, "This is me!");
 }, logError, config);
 
 // tell the map to redraw when resized
