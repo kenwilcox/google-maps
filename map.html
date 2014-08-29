@@ -75,7 +75,10 @@
         event.preventDefault();
         var address = event.target.address.value;
         var tooltip = event.target.tooltip.value;
-        dropPinForAddress(address, tooltip);
+        var markerColor = event.target.markerColor.value;
+        var markerLetter = event.target.markerLetter.value;
+        
+        dropPinForAddress(address, tooltip, markerColor, markerLetter);
         event.target.reset();
         event.target.address.focus();
       };

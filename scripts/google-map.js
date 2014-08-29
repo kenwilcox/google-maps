@@ -46,14 +46,14 @@ var drawMap = function(position) {
   MAP = new google.maps.Map(document.getElementById(MAP_ID), options);
 };
 
-var markPosition = function(position, text) {
+var markPosition = function(position, text, markerType) {
   var coords = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
   
   var marker = new google.maps.Marker({
     position: coords,
     map: MAP,
     title: text || 'You are here!',
-    //icon: 'images/markers/brown_markerA.png',
+    icon: markerType, 
   });
   
   var infoWindow = new google.maps.InfoWindow({
@@ -86,9 +86,20 @@ var positionForGPS = function(gps) {
   }
 };
 
-var dropPinForAddress = function(address, text) {
+var dropPinForAddress = function(address, text, markerColor, markerLetter) {
+  var marker = "default";
+  if (typeof markerColor != "undefined") {
+    marker = "images/markers/" + markerColor + "_Marker";
+  }
+  //if (typeof markerLetter != "undefined") {
+  if (markerLetter != "default") {
+    marker = marker + markerLetter;
+  }
+  if (marker != "default") {
+    marker = marker + ".png";
+  }
   gpsForAddress(address, function(gps) {
-    markPosition(positionForGPS(gps), text);
+    markPosition(positionForGPS(gps), text, marker);
   });
 };
 
