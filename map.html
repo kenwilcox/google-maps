@@ -33,8 +33,9 @@
             <option>Letter</option>
           </select>
         </div>
-        <div class="form-group">
+        <div class="form-group col-md-6">
           <button class="btn btn-primary" type="submit" id="submit">Add Marker</button>
+          <button class="btn btn-danger" type="button" id="clear">Clear Markers</button>
         </div>
       </form>
     </div>
@@ -83,7 +84,15 @@
         event.target.address.focus();
       };
 
+      var handleClick = function(event) {
+        if (confirm("Are you sure you want to delete all your markers?")) {
+          localStorage.setItem(ITEM_KEY, []);
+          location.reload();
+        }
+      };
+
       document.querySelector("#js-map-form").addEventListener('submit', handleSubmission);
+      document.querySelector("#clear").addEventListener('click', handleClick);
 
       window.addEventListener('DOMContentLoaded', function() {
         loadComboBoxItems();
