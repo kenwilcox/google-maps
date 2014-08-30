@@ -34,7 +34,11 @@
           </select>
         </div>
         <div class="form-group col-md-6">
-          <button class="btn btn-primary" type="submit" id="submit">Add Marker</button>
+          <div class="btn-group">
+            <button class="btn btn-primary" type="submit" id="submit">Add Marker</button>
+            <button class="btn btn-info" type="button" id="buildJS">Generate JS</button>
+            <button class="btn btn-success" type="button" id="runGen">Run Demo</button>
+          </div>
           <button class="btn btn-danger" type="button" id="clear">Clear Markers</button>
         </div>
       </form>
@@ -84,15 +88,48 @@
         event.target.address.focus();
       };
 
-      var handleClick = function(event) {
+      var handleClearClick = function(event) {
         if (confirm("Are you sure you want to delete all your markers?")) {
           localStorage.setItem(ITEM_KEY, []);
           location.reload();
         }
       };
 
+      var buildJavaScript = function(event) {
+        var code = "var gps, text, marker;\n\n";
+        mapItems.forEach(function (item) {
+          code += "gps = " + JSON.stringify(item.gps) + ";\n";
+          code += "text = \"" + item.text + "\";\n";
+          code += "marker = \"" + item.marker + "\";\n";
+          code += "markPosition(positionForGPS(gps), text, marker);" + "\n";
+          code += "\n";
+        });
+        alert(code);
+      };
+
+      var runCodeGen = function(event) {
+        var gps, text, marker;
+
+        gps = {"k":45.4562158,"B":-123.8440137};
+        text = "Land Of Cheese!";
+        marker = "images/markers/orange_Marker.png";
+        markPosition(positionForGPS(gps), text, marker);
+
+        gps = {"k":43.66293839999999,"B":-116.68735959999998};
+        text = "Bugtown USA";
+        marker = "images/markers/blue_Marker.png";
+        markPosition(positionForGPS(gps), text, marker);
+
+        gps = {"k":47.6062095,"B":-122.3320708};
+        text = "All it ever does here is rain";
+        marker = "images/markers/paleblue_Marker.png";
+        markPosition(positionForGPS(gps), text, marker);
+      };
+
       document.querySelector("#js-map-form").addEventListener('submit', handleSubmission);
-      document.querySelector("#clear").addEventListener('click', handleClick);
+      document.querySelector("#clear").addEventListener('click', handleClearClick);
+      document.querySelector("#buildJS").addEventListener('click', buildJavaScript);
+      document.querySelector("#runGen").addEventListener('click', runCodeGen);
 
       window.addEventListener('DOMContentLoaded', function() {
         loadComboBoxItems();

@@ -124,7 +124,9 @@ var loadMapItems = function() {
 
 // Create the map
 navigator.geolocation.getCurrentPosition(function(position) {
-  drawMap(position);
+  if (typeof position != 'undefined') {
+    drawMap(position);
+  }
   mapItems = loadMapItems();
   mapItems.forEach(function(item) {
     markPosition(positionForGPS(item.gps), item.text, item.marker);
